@@ -126,4 +126,16 @@ RUN ldconfig
 VOLUME /data
 WORKDIR /data
 
+#Default values
+
+ENV FILEEXT="mp4"\
+    DimensionCropBox="1344,150" \ 
+    OffsetCropBox=46 \ 
+    OffsetCropBoxAlt=-1 \ 
+    Supersampling=-1  \ 
+    ExpandRatio=1  \ 
+    ModeU='sinc'  \ 
+    SeuilI=230  \ 
+    SeuilO=80  \ 
+    SeuilSCD=0.03
 CMD  ["/YoloCR/docker-entrypoint.sh"]
