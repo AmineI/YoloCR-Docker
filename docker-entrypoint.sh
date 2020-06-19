@@ -28,7 +28,7 @@ OCRVideoFile(){
             /YoloCR/YoloCR.vpy - | ffmpeg -hide_banner -i - -c:v mpeg4 -qscale:v 3 -y "$filtered"
 
 ## OCR
-        /YoloCR/YoloCR.sh "$filtered" fra
+        /YoloCR/YoloCR.sh "$filtered" $OCR_LANG
 
 ## Cleanup
     if [[ -z $KEEPDATA ]];
