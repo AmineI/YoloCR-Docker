@@ -1,14 +1,24 @@
-FichierSource=r'Vidéo_Source.mkv'
-DimensionCropBox=[1344,150] # Taille en largeur et hauteur de la CropBox délimitant les sous-titres à OCR.
-HauteurCropBox=46 # Hauteur de la CropBox délimitant les sous-titres à OCR.
-HauteurCropBoxAlt=-1 # Hauteur de la CropBox Alternative, utile pour l'OCR des indications. Double le temps de traitement. Mettre à -1 pour désactiver.
-Supersampling=-1 # Facteur de supersampling (multiplication de la résolution de la vidéo). Mettre à -1 pour calculer le facteur automatiquement.
-ExpandRatio=1 # EXPERIMENTAL ! Facteur Expand/Inpand. La valeur 1 est adaptée pour un Supersampling automatique (1080p). Calcul typique de la valeur : ExpandRatio="RésolutionFinale"/1080.
-ModeU='sinc' # 'sinc' (2 taps, plus rapide), 'znedi3' (plus lent) ou 'waifu2x' (beaucoup plus lent), contrôle la méthode d'Upscale.
-SeuilI=230 # Seuil délimitant les sous-titres. Cette valeur correspond à la luminosité minimale de l'intérieur (Inline).
-SeuilO=80 # Seuil délimitant les sous-titres. Cette valeur correspond à la luminosité maximale de l'extérieur (Outline).
-SeuilSCD=0.03 # Un seuil trop bas augmente le nombre de faux positifs, un seuil trop haut ne permet pas de détecter tous les sous-titres.
+import os
 
+def to_list_or_int(string):
+	""" 
+	Converts a string formatted as "1,2,3,..." to an array  [1,2,3,...]
+	Returns an integer if there is only one element, or a whole array otherwise
+	"""
+	arr=string.split(",")
+	int_arr = [int(i) for i in arr]
+	return int_arr[0] if(len(arr)==1) else int_arr 
+
+#FichierSource=r'Vidéo_Source.mkv' # Needs to be passed as an argument with vspipe --arg FichierSource="file.mkv" \
+DimensionCropBox=to_list_or_int(os.environ.get('DimensionCropBox')) # Taille en largeur et hauteur de la CropBox délimitant les sous-titres à OCR.
+HauteurCropBox=int(os.environ.get('OffsetCropBox')) # Hauteur de la CropBox délimitant les sous-titres à OCR.
+HauteurCropBoxAlt=int(os.environ.get('OffsetCropBoxAlt')) # Hauteur de la CropBox Alternative, utile pour l'OCR des indications. Double le temps de traitement. Mettre à -1 pour désactiver.
+Supersampling=int(os.environ.get('Supersampling')) # Facteur de supersampling (multiplication de la résolution de la vidéo). Mettre à -1 pour calculer le facteur automatiquement.
+ExpandRatio=int(os.environ.get('ExpandRatio'))# EXPERIMENTAL ! Facteur Expand/Inpand. La valeur 1 est adaptée pour un Supersampling automatique (1080p). Calcul typique de la valeur : ExpandRatio="RésolutionFinale"/1080.
+ModeU=os.environ.get('ModeU') # 'sinc' (2 taps, plus rapide), 'znedi3' (plus lent) ou 'waifu2x' (beaucoup plus lent), contrôle la méthode d'Upscale.
+SeuilI=to_list_or_int(os.environ.get('SeuilI')) # Seuil délimitant les sous-titres. Cette valeur correspond à la luminosité minimale de l'intérieur (Inline).
+SeuilO=to_list_or_int(os.environ.get('SeuilO')) # Seuil délimitant les sous-titres. Cette valeur correspond à la luminosité maximale de l'extérieur (Outline).
+SeuilSCD=float(os.environ.get('SeuilSCD')) # Un seuil trop bas augmente le nombre de faux positifs, un seuil trop haut ne permet pas de détecter tous les sous-titres.
 
 import vapoursynth as vs
 if ModeU=='znedi3':
