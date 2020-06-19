@@ -1,6 +1,8 @@
 #!/bin/bash
 ##
 
+
+YolOCRDir=$(dirname "$0")
 if [ ! -z $2 ]; then test=false; for testlang in $(tesseract  --list-langs 2>&1 | tail -n +2); do if [ $testlang == $2 ]; then test=true; fi; done; fi
 if [ -z "$1" ]; then echo -e "N'oubliez pas de mettre le nom de la Vidéo Filtrée en argument.\nExemple : ./YoloCR.sh Vidéo_Filtrée.mp4 <lang>"; exit=true
 elif [ ! -z $3 ]; then echo -e "Mettez le nom de la Vidéo Filtrée entre guillemets.\nExemple : ./YoloCR.sh \"Vidéo Filtrée.mp4\" <lang>"; exit=true
@@ -98,7 +100,7 @@ if [ $OCRType = Tesseract ]; then
     fi
     if (( $TessVersionNum1 >= 4 ))
         then psm="--psm"
-                 if [ -f ../tessdata/$lang.traineddata ]; then tessdata="--tessdata-dir ../tessdata"; fi
+                 if [ -f $YolOCRDir/tessdata/$lang.traineddata ]; then tessdata="--tessdata-dir $YolOCRDir/tessdata"; fi
                  if tesseract $(ls *.jpg | head -1) - $tessdata -l $lang --oem 0 1>/dev/null 2>&1
                     then echo "$msg Legacy."; oem="--oem 0"
                     else echo "$msg LSTM."; ls *.jpg | parallel $popt convert {} -negate {}
