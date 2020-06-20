@@ -1,15 +1,16 @@
 import os
 
-def to_list_or_int(string):
+def to_list_or_int(string,separator=","):
 	""" 
 	Converts a string formatted as "1,2,3,..." to an array  [1,2,3,...]
 	Returns an integer if there is only one element, or a whole array otherwise
 	"""
-	arr=string.split(",")
+	arr=string.split(separator)
 	int_arr = [int(i) for i in arr]
 	return int_arr[0] if(len(arr)==1) else int_arr 
 
 #FichierSource=r'Vidéo_Source.mkv' # Needs to be passed as an argument with vspipe --arg FichierSource="file.mkv" \
+framesOffset = to_list_or_int(os.environ.get('FRAMES'),"-")[0]
 DimensionCropBox=to_list_or_int(os.environ.get('DimensionCropBox')) # Taille en largeur et hauteur de la CropBox délimitant les sous-titres à OCR.
 HauteurCropBox=int(os.environ.get('OffsetCropBox')) # Hauteur de la CropBox délimitant les sous-titres à OCR.
 HauteurCropBoxAlt=int(os.environ.get('OffsetCropBoxAlt')) # Hauteur de la CropBox Alternative, utile pour l'OCR des indications. Double le temps de traitement. Mettre à -1 pour désactiver.
@@ -141,6 +142,7 @@ def Cleaning(clip,e):
 	return ClipCleaning
 	
 def SceneLog(n,f,clip,log):
+	n-=framesOffset
 	if f.props._SceneChangeNext == 1 or f.props._SceneChangePrev == 1:
 		open(log, "a").write(str(n)+" "+str(f.props._SceneChangePrev)+" "+str(f.props._SceneChangeNext)+"\n")
 	return clip

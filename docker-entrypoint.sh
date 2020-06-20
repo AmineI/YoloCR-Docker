@@ -13,6 +13,15 @@ OCRVideoFile(){
     basename="${file%.*}";ext="${file##*.}"
     msg="Processing $file with SeuilI=${SeuilI} and SeuilO=${SeuilO}"
     filtered_basename="${basename}_filtered($SeuilI-$SeuilO)"
+
+    if [[ ! -z $FRAMES ]];
+    then
+        #If test frames ranges were specified (like "1-1000"), we create a filtered video with only these frames
+        IFS='-' read -ra frames <<< $FRAMES
+        msg+=" from frames ${frames[0]} to ${frames[1]}"
+        filtered_basename+="_${frames[0]}-${frames[1]}"
+        frameArgs=("--start" "${frames[0]}" "--end" "${frames[1]}")
+    fi
         echo $msg 
         #TODO Eventually change subfolder names ?
         mkdir -p "$basename/" #($SeuilI-$SeuilO)/"
@@ -23,7 +32,8 @@ OCRVideoFile(){
 
         vspipe -y \
             --arg FichierSource="$filesDir/$file" \
-            --preserve-cwd \ #Without this VSPipe overrides the working directory with the script path, which is undesired. 
+            --preserve-cwd \ 
+            #Without this VSPipe overrides the working directory with the script path, which is undesired. 
             "${frameArgs[@]}" \
             /YoloCR/YoloCR.vpy - | ffmpeg -hide_banner -i - -c:v mpeg4 -qscale:v 3 -y "$filtered"
 
