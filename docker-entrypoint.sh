@@ -6,6 +6,7 @@
 
 #Import project configuration variables
 source *.conf
+#TODO print current config ?
 
 OCRVideoFile(){
     filesDir=$(pwd)
