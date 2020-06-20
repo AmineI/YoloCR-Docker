@@ -34,10 +34,10 @@ OCRVideoFile(){
         vspipe -y \
             --arg FichierSource="$filesDir/$file" \
             --preserve-cwd \ 
-            #Without this VSPipe overrides the working directory with the script path, which is undesired. 
             "${frameArgs[@]}" \
             /YoloCR/YoloCR.vpy - | ffmpeg -hide_banner -i - -c:v mpeg4 -qscale:v 3 -y "$filtered"
-
+#Without --preserve-cwd VSPipe overrides the working directory with the script path, which is undesired. 
+            
 ## OCR
         /YoloCR/YoloCR.sh "$filtered" $OCR_LANG
 
