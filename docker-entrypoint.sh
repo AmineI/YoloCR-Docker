@@ -51,6 +51,11 @@ OCRVideoFile(){
     echo -e "\033[0;32m Output in ${filtered_basename}\e[0m"
 }
 
+
+shopt -s nullglob
+#nullglob means that nothing will be done if no files match the below expression
+# instead of running the loop with a the literal "*.mp4"
+
 for file in *.$FILEEXT; do
     OCRVideoFile "$file"
 done
