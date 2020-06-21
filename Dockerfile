@@ -119,17 +119,18 @@ RUN dpkg -i ${BUILT_PACKAGES}/zimg* && \
     dpkg -i ${BUILT_PACKAGES}/fmtconv*
 
 
-COPY ./ /YoloCR
-COPY --from=tesseract-data ${TESSDATA} /YoloCR/tessdata
-
-RUN ldconfig
-
 #We declare a volume for data, that we set as our workdir to process files in it.
 VOLUME /data
 WORKDIR /data
 
-#Default values
+COPY ./ /YoloCR
+COPY --from=tesseract-data ${TESSDATA} /YoloCR/tessdata
 
+RUN ldconfig
+#ldconfig creates the necessary links and cache to the most recent shared libraries
+#Needed for vapoursynth to figure out its libraries.
+
+#Default values
 ENV FILEEXT="mp4"\
     DimensionCropBox="1344,150" \ 
     OffsetCropBox=46 \ 
