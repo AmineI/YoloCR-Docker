@@ -26,8 +26,9 @@ OCRVideoFile(){
         echo $msg 
 
 ## Create a temporary working dir
-        mkdir -p "/tmp_YolOCR/$filtered_basename/"
-        cd "/tmp_YoloCR/$filtered_basename"
+        time=$(date +%s)
+        mkdir -p "/tmp_YolOCR/$time"
+        cd "/tmp_YolOCR/$time"
 
 ## Filter    
         filtered="${filtered_basename}.$ext"
