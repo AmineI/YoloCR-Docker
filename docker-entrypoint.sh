@@ -45,7 +45,7 @@ OCRVideoFile(){
     if [[ -z $KEEPDATA ]];
     then  #We proceed to cleanup intermediate files only if the "KEEPDATA" environment variable is not set.
         rm -rf "./ScreensFiltrés/" "./TessResult/"
-        rm -f "./SceneChanges*.log" "./Timecodes*.txt" "./$filtered" "../$file.ffindex"
+        rm -f "./SceneChanges.log" "./Timecodes.txt" "./$filtered" "../$file.ffindex"
     fi
     cd .. 
     echo -e "\033[0;32m Output in ${filtered_basename}\e[0m"
