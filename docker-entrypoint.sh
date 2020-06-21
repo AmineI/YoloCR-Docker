@@ -24,9 +24,10 @@ OCRVideoFile(){
         frameArgs=("--start" "${frames[0]}" "--end" "${frames[1]}")
     fi
         echo $msg 
-        #TODO Eventually change subfolder names ?
-        mkdir -p "$basename/" #($SeuilI-$SeuilO)/"
-        cd "$basename/" #($SeuilI-$SeuilO)/"
+
+## Create a temporary working dir
+        mkdir -p "/tmp_YolOCR/$filtered_basename/"
+        cd "/tmp_YoloCR/$filtered_basename"
 
 ## Filter    
         filtered="${filtered_basename}.$ext"
@@ -41,13 +42,20 @@ OCRVideoFile(){
 ## OCR
         /YoloCR/YoloCR.sh "$filtered" $OCR_LANG
 
-## Cleanup
-    if [[ -z $KEEPDATA ]];
-    then  #We proceed to cleanup intermediate files only if the "KEEPDATA" environment variable is not set.
-        rm -rf "./ScreensFiltrés/" "./TessResult/"
-        rm -f "./SceneChanges.log" "./Timecodes.txt" "./$filtered" "../$file.ffindex"
+## Copy output
+
+    #TODO Eventually change subfolder names ?
+    mkdir -p "$filesDir/$basename/" #($SeuilI-$SeuilO)/"
+
+    cp "$filtered_basename.srt" "$filesDir/$basename"
+
+    if [[ ! -z $KEEPDATA ]];
+    then  #We proceed to copy intermediate files to the output folder only if the KEEPDATA environment variable is set.
+        cp -r "./ScreensFiltrés" "./TessResult" "$filesDir/$basename"
+        cp "./SceneChanges.log" "./Timecodes.txt" "./$filtered" "$filesDir/$basename"
     fi
-    cd .. 
+
+    cd $filesDir
     echo -e "\033[0;32m Output in ${filtered_basename}\e[0m"
 }
 
