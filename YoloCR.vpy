@@ -10,7 +10,6 @@ def to_list_or_int(string,separator=","):
 	return int_arr[0] if(len(arr)==1) else int_arr 
 
 #FichierSource=r'Vidéo_Source.mkv' # Needs to be passed as an argument with vspipe --arg FichierSource="file.mkv" \
-framesOffset = to_list_or_int(os.environ.get('FRAMES'),"-")[0]
 DimensionCropBox=to_list_or_int(os.environ.get('DimensionCropBox')) # Taille en largeur et hauteur de la CropBox délimitant les sous-titres à OCR.
 HauteurCropBox=int(os.environ.get('OffsetCropBox')) # Hauteur de la CropBox délimitant les sous-titres à OCR.
 HauteurCropBoxAlt=int(os.environ.get('OffsetCropBoxAlt')) # Hauteur de la CropBox Alternative, utile pour l'OCR des indications. Double le temps de traitement. Mettre à -1 pour désactiver.
@@ -20,6 +19,11 @@ ModeU=os.environ.get('ModeU') # 'sinc' (2 taps, plus rapide), 'znedi3' (plus len
 SeuilI=to_list_or_int(os.environ.get('SeuilI')) # Seuil délimitant les sous-titres. Cette valeur correspond à la luminosité minimale de l'intérieur (Inline).
 SeuilO=to_list_or_int(os.environ.get('SeuilO')) # Seuil délimitant les sous-titres. Cette valeur correspond à la luminosité maximale de l'extérieur (Outline).
 SeuilSCD=float(os.environ.get('SeuilSCD')) # Un seuil trop bas augmente le nombre de faux positifs, un seuil trop haut ne permet pas de détecter tous les sous-titres.
+
+if os.environ.get('FRAMES') is not None:
+	framesOffset = to_list_or_int(os.environ.get('FRAMES'),"-")[0]
+else:
+	framesOffset = 0
 
 import vapoursynth as vs
 if ModeU=='znedi3':
