@@ -103,6 +103,7 @@ RUN apt-get update -qq &&\
         python3.8-minimal libpython3.8\
         links parallel gawk bc file\
         ffmpeg \
+        #TODO Building a custom FFMPEG would save a substantial amount of space.
         tesseract-ocr tesseract-ocr-${OCR_LANG} \
         --no-install-recommends -q -y &&\
     rm -rf /var/lib/apt/lists/*
@@ -122,6 +123,7 @@ COPY ./ /YoloCR
 COPY --from=tesseract-data ${TESSDATA} /YoloCR/tessdata
 
 RUN ldconfig
+
 #We declare a volume for data, that we set as our workdir to process files in it.
 VOLUME /data
 WORKDIR /data
