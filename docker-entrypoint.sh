@@ -66,7 +66,7 @@ shopt -s nullglob
 # instead of running the loop with a the literal "*.mp4"
 
 for file in *.$FILEEXT; do
-    OCRVideoFile "$file"
+    time OCRVideoFile "$file"
 done
 
 echo "Finished."
