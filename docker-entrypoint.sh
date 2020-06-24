@@ -48,12 +48,12 @@ OCRVideoFile(){
     #TODO Eventually change subfolder names ?
     mkdir -p "$filesDir/$basename/" #($SeuilI-$SeuilO)/"
 
-    cp "$filtered_basename.srt" "$filesDir/$basename"
+    cp "$filtered_basename"*"srt" "$filesDir/$basename"
 
     if [[ ! -z $KEEPDATA ]];
     then  #We proceed to copy intermediate files to the output folder only if the KEEPDATA environment variable is set.
         cp -r "./ScreensFiltrés" "./TessResult" "$filesDir/$basename"
-        cp "./SceneChanges.log" "./Timecodes.txt" "./$filtered" "$filesDir/$basename"
+        cp "./SceneChanges"* "./Timecodes"* "./$filtered" "$filesDir/$basename"
     fi
 
     cd $filesDir
