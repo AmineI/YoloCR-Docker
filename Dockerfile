@@ -142,4 +142,5 @@ ENV FILEEXT="mp4"\
     SeuilI=230  \ 
     SeuilO=80  \ 
     SeuilSCD=0.03
+    #KEEPDATA is an optional environment variable. If set, working data will be copied to the data volume on completion.
 CMD  ["/YoloCR/docker-entrypoint.sh"]
