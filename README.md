@@ -3,7 +3,7 @@ YoloCR, optimized for Docker.
 
 YoloCR is a convenient OCR script, forked from https://git.clapity.eu/Id/YoloCR
 
-This is a docker-ized version of that project.
+This is a docker-ized version of that project, trying to make as few changes as possible to the original files.
 
 *Why ?* Well, considering the many dependencies to build and prepare to set this up (see [original README](README_EN.md)), I just did not want to pollute my WSL install or create a heavy dedicated environment/VM just for this considering how low on space I was. 
 
@@ -36,7 +36,7 @@ docker run -it -v:"THE/FOLDER/YOU/WANT/TO/PROCESS":/data amine1u1/yolocr
 ```
 or 
 ```
-docker run -it -v:"THE/FOLDER/YOU/WANT/TO/PROCESS":/data amine1u1/yolocr -e "DimensionCropBox=1344,150"
+docker run -it -v:"THE/FOLDER/YOU/WANT/TO/PROCESS":/data amine1u1/yolocr -e "DimensionCropBox=1344,150" ...
 ```
 
 Once done, the container will create a folder with a .srt subtitle file for each input file, with the OCR results according to the parameters you set. 
@@ -48,3 +48,8 @@ Two additional environment variables are available :
 
 
 If you ever need a reminder of the standard YoloCR parameters, you can refer to the [template configuration file](_default.conf), which holds both the default values and comments about how to use these parameters.
+
+
+Credits
+=======
+Thanks to *Yuri Zero* for his original work on [YoloCR](https://git.clapity.eu/Id/YoloCR) , which is embedded in this hard fork.
