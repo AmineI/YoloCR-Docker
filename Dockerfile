@@ -102,7 +102,7 @@ RUN apt-get update -qq &&\
     apt-get install \
         python3.8-minimal libpython3.8\
         links parallel gawk bc file\
-        ffmpeg \
+        ffmpeg wget ca-certificates\
         #TODO Building a custom FFMPEG would save a substantial amount of space.
         tesseract-ocr tesseract-ocr-${OCR_LANG} \
         --no-install-recommends -q -y &&\
