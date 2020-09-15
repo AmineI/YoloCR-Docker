@@ -1,3 +1,5 @@
+This is the original untouched readme of the project. Credits to *YuriZero* for the entirety of this file below.
+
 # [YoloCR](https://bitbucket.org/YuriZero/yolocr/src)
 
 ## For noobs
